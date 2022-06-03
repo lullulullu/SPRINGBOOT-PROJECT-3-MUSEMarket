@@ -2,7 +2,7 @@
 SpringBootProject
   
 ## 🖥️ Project 소개 <br/>
-*  "MUSE Market🍺🥂"<br/>
+*  "MUSE Market🎨🎹🥁"<br/>
   예술관련물품 중고거래 마켓입니다. <br/>
   
 ## 🕰️ 기간 <br/>
