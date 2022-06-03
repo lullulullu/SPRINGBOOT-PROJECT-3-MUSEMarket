@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+/* 중복아이디 존재하지 않는경우 */
+	.successIdChk{
+		color : green;
+		display : none;
+	}
+	/* 중복아이디 존재하는 경우 */
+	.successIdChk2{
+		color : red;
+		display : none;
+	}

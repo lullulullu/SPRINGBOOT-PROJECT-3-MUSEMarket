@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.spring.boot.mapper.ShopMapper">
+
+<select id="maxNum" resultType="int">
+	select nvl(max(prodNo),0) from product
+</select>
+
+
+<select id="maxImgNum" resultType="int">
+	select nvl(max(imgNo),0) from productFile
+</select>
+
+
+<select id="getDataCount" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from product
+	where ${searchKey} like '%' || #{searchValue} || '%'
+</select>
+
+
+<select id="getLists" parameterType="map" resultType="com.spring.boot.dto.ShopDTO">	
+	select 
+	product.prodNo, product.userNo, product.prodSubject, product.prodSelect,
+	product.prodSale, product.prodName, product.prodPrice, product.prodHeart, 
+	productTm.tmImg 
+	from product
+	inner join productTm
+	on product.prodNo = productTm.prodNo 
+	order by prodNo desc	
+</select>
+
+
+<select id="getSelectLists" parameterType="map" resultType="com.spring.boot.dto.ShopDTO">	
+	select 
+	product.prodNo, product.userNo, product.prodSubject, product.prodSelect,
+	product.prodSale, product.prodName, product.prodPrice, product.prodHeart, 
+	productTm.tmImg 
+	from product 
+	inner join productTm
+	on product.prodNo = productTm.prodNo
+	where prodSelect like '%' || #{prodSelect} || '%'	
+</select>
+
+<insert id="insertData" parameterType="com.spring.boot.dto.ShopDTO">
+
+	insert into product (prodNo,userNo,prodSelect,prodSubject,prodSale,prodName,
+	prodPrice,prodHitCount,prodHeart,prodQuality,prodCreated,prodAddr,prodTrade,prodContent)
+	values (#{prodNo},#{userNo},#{prodSelect},#{prodSubject},#{prodSale},#{prodName},
+	#{prodPrice},0,0,#{prodQuality},sysdate,#{prodAddr},#{prodTrade},#{prodContent})
+</insert>
+
+<insert id="insertTmFile" parameterType="com.spring.boot.dto.ShopDTO">
+	insert into productTm (prodNo,tmImg,originalFileName)
+	values (#{prodNo},#{tmImg},#{originalFileName})
+</insert>
+
+
+<insert id="insertFile" parameterType="com.spring.boot.dto.ShopDTO">
+	insert into productFile (prodNo,imgNo,originalFileName,saveFileName)
+	values (#{prodNo},#{imgNo},#{originalFileName},#{saveFileName})
+</insert>
+
+
+
+</mapper>

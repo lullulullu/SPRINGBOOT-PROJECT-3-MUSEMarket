@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.boot.mapper.QaMapper">
+
+	<select id="maxNum" resultType="int">
+		select nvl(max(qaNo), 0) from qa
+	</select>
+	
+	<insert id="insertData" parameterType="com.spring.boot.dto.QaDTO">
+		insert into qa(qaNo,userNo, qaSubject, qaContent, qaCreated )
+		values(#{qaNo},#{userNo}, #{qaSubject}, #{qaContent}, sysdate)
+	</insert>
+	
+	<select id="getDataCount" parameterType="hashMap" resultType="int">
+		select nvl(count(*), 0) from qa
+		where ${searchKey} like '%' || #{searchValue} || '%'
+	</select>
+	
+	<select id="getList" parameterType="map" resultType="com.spring.boot.dto.QaDTO">
+		select*from(
+		select rownum rnum, data.* from(
+		select qaNo, userNo, qaSubject, to_char(qaCreated, 'YYYY-MM-DD') qaCreated
+		from qa where ${searchKey} like '%' || #{searchValue} || '%'
+		order by qaNo desc) data)
+	<![CDATA[
+		where rnum>=#{start} and rnum<=#{end}
+	]]>
+	</select>
+	
+	<select id="getReadData" parameterType="int" resultType="com.spring.boot.dto.QaDTO">
+		select qaNo, userNo, qaSubject, qaContent, qaCreated
+		from qa where qaNo=#{qaNo}
+	</select>
+	
+	<select id="getUserId" parameterType="int" resultType="string">
+      select userId from users where userNo=#{userNo}
+   	</select>
+	
+	<select id="getUserEmail" parameterType="int" resultType="string">
+      select userEmail from users where userNo=#{userNo}
+   	</select>
+	
+	<update id="updateData" parameterType="com.spring.boot.dto.QaDTO">
+		update qa set qaSubject=#{qaSubject},
+		qaContent=#{qaContent} where qaNo=#{qaNo}
+	</update>
+	
+	<delete id="deleteData" parameterType="int">
+		delete qa where qaNo=#{qaNo}
+	</delete>
+
+</mapper>

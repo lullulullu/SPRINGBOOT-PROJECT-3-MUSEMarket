@@ -1,0 +1,91 @@
+@CHARSET "UTF-8";
+
+#bbs {
+	width:600px;
+	margin:30px auto;
+	text-align:left;
+}
+
+#bbs_title {
+	width:574px;
+	padding-left:20px;
+	height:40px;
+	border:3px solid #000;
+	text-align:left;
+	font-weight: bold;
+	line-height:40px;
+	font-size:10pt;
+	margin-bottom:30px;
+}
+
+
+#bbsArticle {
+	width:600px;
+	overflow: visible;
+	border-top:3px solid #808080;
+	border-bottom:3px solid #808080;
+	text-align:left;
+}
+
+#bbsArticle_header {
+	height:35px;
+	line-height:35px;
+	border-bottom:2px solid #DBDBDB;
+	text-align:center;
+}
+
+#bbsArticle dt {
+	float:left;
+	height:35px;
+	width:60px;
+	line-height:35px;
+	text-align:center;
+	background-color:#EEEEEE;
+}
+
+#bbsArticle dd {
+	float:left;
+	height:35px;
+	width:230px;
+	line-height:35px;
+	text-align:left;
+	padding-left:10px;
+}
+
+.bbsArticle_bottomLine {
+	height:35px;
+	line-height:35px;
+	border-bottom:1px solid #DBDBDB;
+	clear:both;
+	text-align:left;
+}
+.bbsArticle_noLine {
+	height:35px;
+	line-height:35px;
+	clear:both;
+	text-align:left;
+}
+
+#bbsArticle_content {
+	overflow: visible;
+	border-bottom:1px solid #DBDBDB;
+	text-align:left;
+}
+
+#bbsArticle_footer {
+	clear:both;
+	height:32px;
+	line-height:32px;
+	margin-bottom:20px;
+}
+
+#bbsArticle_footer #leftFooter{
+	float:left;
+	width:300px;
+	text-align:left;
+}
+#bbsArticle_footer #rightFooter{
+	float:right;
+	width:300px;
+	text-align:right;
+}

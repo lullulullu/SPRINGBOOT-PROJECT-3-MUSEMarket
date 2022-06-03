@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.boot.mapper.CommuMapper">
+
+	<select id="maxNum" resultType="int">
+		select nvl(max(commuNo), 0) from commu
+	</select>
+
+	<insert id="insertData" parameterType="com.spring.boot.dto.CommuDTO">
+		insert into commu(commuNo,userNo, commuSubject, commuContent, commuIpAddr, commuHitCount, commuCreated )
+		values(#{commuNo}, #{userNo}, #{commuSubject, jdbcType=VARCHAR}, #{commuContent, jdbcType=VARCHAR}, #{commuIpAddr}, 0, sysdate)
+	</insert>
+	
+	<select id="getDataCount" parameterType="hashMap" resultType="int">
+		select nvl(count(*), 0) from commu
+		where ${searchKey} like '%' || #{searchValue} || '%'
+	</select>
+	
+	<select id="getList" parameterType="map" resultType="com.spring.boot.dto.CommuDTO">
+		select*from(
+		select rownum rnum, data.* from(
+		select commuNo, userNo, commuSubject, commuHitCount, to_char(commuCreated, 'YYYY-MM-DD') commuCreated
+		from commu where ${searchKey} like '%' || #{searchValue} || '%'
+		order by commuNo desc) data)
+	<![CDATA[
+		where rnum>=#{start} and rnum<=#{end}
+	]]>
+	</select>
+	
+	<update id="updateHitCount" parameterType="int">
+		update commu set commuHitCount= commuHitCount+1 where commuNo =#{commuNo}
+	</update>
+	
+	<select id="getReadData" parameterType="int" resultType="com.spring.boot.dto.CommuDTO">
+		select commuNo, userNo, commuSubject, commuContent, commuIpAddr, commuHitCount, commuCreated
+		from commu where commuNo=#{commuNo}
+	</select>
+	
+	<select id="getUserId" parameterType="int" resultType="string">
+      select userId from users where userNo=#{userNo}
+    </select>
+	
+	<update id="updateData" parameterType="com.spring.boot.dto.CommuDTO">
+		update commu set commuSubject=#{commuSubject, jdbcType=VARCHAR}, commuContent=#{commuContent, jdbcType=VARCHAR} where commuNo=#{commuNo}
+	</update>
+
+	<delete id="deleteData" parameterType="int">
+		delete commu where commuNo=#{commuNo}
+	</delete>
+	
+
+</mapper>

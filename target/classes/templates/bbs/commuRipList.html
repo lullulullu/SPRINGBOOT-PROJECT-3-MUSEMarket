@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+
+
+</head>
+<body>
+
+<table width="700" border="0" cellpadding="0" cellspacing="0" style="margin: auto;" th:each="dto : ${lists }">
+	
+	<tr>
+		<td colspan="2" bgcolor="#999999" height="1"></td>
+	</tr>
+	
+	<tr>
+		<td colspan="2" bgcolor="#fff" height="10"></td>
+	</tr>
+	
+	<tr>
+		<td width="60" height="30" th:text="' ▦ ' + ${dto.userId }"></td>
+		<td width="240" height="30" style="padding-left: 10px;" align="right" th:text="${dto.commuRipCreated }" ></td>
+	</tr>
+	
+	<tr>
+		<td height="30" width="270" colspan="2" th:text="${dto.commuRipContent}"></td> 
+		
+	</tr>
+	
+	<tr>
+		<td colspan="2" bgcolor="#fff" height="10"></td>
+	</tr>
+	
+		
+</table>
+
+
+</body>
+</html>

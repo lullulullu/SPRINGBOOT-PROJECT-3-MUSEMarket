@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.boot.mapper.CommRipMapper">
+
+	<select id="maxNum" resultType="int">
+		select nvl(max(commuRipNo), 0) from commuRip
+	</select>
+
+	<insert id="insertReply" parameterType="com.spring.boot.dto.CommRipDTO">
+		insert into commuRip(commuRipNo, userNo, commuNo, commuRipContent, commuRipCreated)
+		values(#{commuRipNo}, #{userNo}, #{commuNo}, #{commuRipContent}, sysdate)
+	</insert>
+	
+	<select id="getDataCount" resultType="int">
+		select nvl(count(*), 0) from commuRip
+	</select>
+	
+
+	<select id="getReplyList" parameterType="int" resultType="com.spring.boot.dto.CommRipDTO">
+		select commuRipNo, userNo, commuNo, commuRipContent, commuRipCreated
+		from commuRip where commuNo = #{commuNo} order by commuRipNo 
+	</select>
+	
+	
+	<select id="getCommuRipList" parameterType="int" resultType="com.spring.boot.dto.CommRipDTO">
+		select commuRipNo, userNo, commuNo, commuRipContent, commuRipCreated
+		from commuRip where commuNo = #{commuNo} order by commuRipNo 
+	</select>
+	
+	
+	<select id="getCommuRipUserId" parameterType="int" resultType="string">
+		select userId from users where userNo=#{userNo}
+	</select>
+	
+	<select id="getUserId" parameterType="int" resultType="string">
+		select userId from users where userNo=#{userNo}
+	</select>
+	
+<!-- 	<update id="updateReply" parameterType="com.spring.boot.dto.CommRipDTO">
+		update commRip set crContent=#{crContent} where crNo=#{crNo}
+	</update>
+
+	<delete id="deleteReply" parameterType="int">
+		delete commRip where crNo=#{crNo}
+	</delete> -->
+	
+
+</mapper>

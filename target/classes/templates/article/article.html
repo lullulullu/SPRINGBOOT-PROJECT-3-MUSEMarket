@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Muse-Market</title>
+    <link href="css/bootstrap.min1.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href=" css/prettyPhoto.css" rel="stylesheet">
+    <link href=" css/price-range.css" rel="stylesheet">
+    <link href=" css/animate.css" rel="stylesheet">
+	<link href=" css/main1.css" rel="stylesheet">
+	<link href=" css/responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href=" images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+<title>커뮤니티 게시판</title>
+
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/css/sale_article.css"/>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+<script src="https://kit.fontawesome.com/33d19416e0.js" crossorigin="anonymous"></script> 
+
+
+<script type="text/javascript">
+	
+	$(function(){
+
+		listPage(1);
+		
+	});
+	
+	$(document).ready(function(){
+	
+		$("#sendButton").click(function(){
+			
+			var params = "userNo="+ $("#userNo").val()
+						+ "&reviewContent=" + $("#reviewContent").val()
+					 	+ "&prodNo=" + $("#prodNo").val();  
+			//alert(params);
+					 	
+			$.ajax({
+				
+				type:"POST",
+				url:"/sale_create.action",
+				data:params,
+				success:function(args){
+					
+					$("#listData").html(args);
+					
+					//Ajax는 새로고침이 안되기때문에
+					//코딩으로 삭제
+					$("#reviewContent").val("");
+					$("#reviewContent").focus();
+				},
+				beforeSend:showRequest,
+				error:function(e){
+					//alert(e.responseText);
+				}
+			});
+		});
+	});
+	
+	
+	function showRequest(){
+		
+		var userId = $.trim($("#userId").val());
+		var reviewContent = $.trim($("#reviewContent").val());
+		
+		if(!reviewContent){
+			alert("\n내용을 입력하세요.");
+			$("#reviewContent").focus();
+			return false;
+		}
+		
+		if(reviewContent.length>200){
+			alert("\n내용은 200자까지만 가능합니다.")
+			$("#reviewContent").focus();
+			return false;
+		}
+		return true;	
+	}
+	
+	
+	function listPage(page){
+				
+		var url = "/sale_list.action";
+		var hhh = $("#prodNo").val();
+		
+		$.post(url,{
+			 prodNo: hhh
+		},function(args){
+			$("#listData").html(args);
+		});
+		
+		$("#listData").show();
+		
+	}
+	
+	
+ 	 $(document).ready(function(){
+		
+		$("#sendHeart").click(function(){
+			
+			var params = "heartData="+ $("#myHeartCount").val()
+						+ "&prodNo=" + $("#prodNo").val();  
+	
+			$.ajax({
+				
+				type:"POST",
+				data:params,
+				url:"/heartData.action",
+				success:function(args){
+					
+					//Ajax는 새로고침이 안되기때문에
+					//코딩으로 삭제
+					$("#sendHeart").val("♥");
+					
+				},
+				error:function(e){
+					//alert(e.responseText);
+				}
+			});
+		});
+	}); 
+ 	 
+ 	 $(document).ready(function(){
+ 		
+ 		$("#removeHeart").click(function(){
+ 			
+ 			var params = "heartData="+ $("#myHeartCount").val()
+ 						+ "&prodNo=" + $("#prodNo").val();  
+ 			
+ 			$.ajax({
+ 				
+ 				type:"POST",
+ 				data:params,
+ 				url:"/heartData.action",
+ 				success:function(args){
+ 					
+ 					//Ajax는 새로고침이 안되기때문에
+ 					//코딩으로 삭제
+ 					$("#removeHeart").val("♡");
+ 					
+ 				},
+ 				error:function(e){
+ 					//alert(e.responseText);
+ 				}
+ 			});
+ 		});
+ 	}); 
+	 
+</script>
+
+</head>
+
+
+<body>
+	<header id="header"><!--header-->
+		<div class="header_top"><!--header_top-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="contactinfo">
+							<ul class="nav nav-pills">
+								<li><a href="#"><i class="fa fa-phone"></i> +82 123 1234</a></li>
+								<li><a href="#"><i class="fa fa-envelope"></i> info@muse.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="social-icons pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header_top-->
+		
+			<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a th:href="@{index.action}"><img src=" images/home/logo_6.png" /></a>
+						</div>
+					
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-navr">
+	    						<li><div th:text="${session.login.getUserName() + ((session.login.getUserId()))} + '님 환영합니다'"></div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-navr">
+						
+								<li>								
+								<a th:if="${session.login != null}" th:href="@{mypage.action}">
+								<i class="fa fa-user"></i> MyPage</a>
+								
+								</li>
+								
+								<li>
+								<a th:if="${session.login == null}" th:href="@{loginForm.action}"><i class="fa fa-user"></i> MyPage</a>
+								</li>
+								
+								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+								
+								<li><a th:if="${session.login == null}" th:href="@{signupForm.action}"><i class="fa fa-user"></i>Join</a></li>
+								<li><a th:if="${session.login == null}" th:href="@{loginForm.action}"><i class="fa fa-pencil-square"></i>Write</a></li>
+								<li><a th:if="${session.login != null}" th:href="@{upload.action}"><i class="fa fa-pencil-square"></i>Write</a></li>
+								<li><a th:if="${session.login == null}" th:href="@{loginForm.action}"><i class="fa fa-lock"></i>Login</a></li>
+								<li><a th:if="${session.login != null}" th:href="@{logout.action}"><i class="fa fa-unlock"></i>Logout</a></li>
+								<li><div th:if="${session.login != null}"></div></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a th:href="@{index.action}" class="active">Home</a></li>
+								<li class="dropdown"><a th:href="@{shop.action}">Purchase<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">                                                                       
+                                        <li><a href="http://localhost:8080/selecshop.action?prodSelect=poster">POSTER</a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=figure">FIGURE</a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=goods">GOODS</a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=etc">ETC</a></li> 
+										
+                                        <li><a href="http://localhost:8080/selecshop.action?prodSelect=lp">LP </a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=videos">VIDEOS </a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=tape">TAPE </a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=cd">CD/DVD</a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=instrument">INSTRUMENT </a></li> 
+                                    </ul>
+                                </li> 
+								<li><a th:href="@{list.action}">Community</a></li>
+								
+								<li class="dropdown"><a th:href="@{qa_contact.action}">Contact<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+										<li><a th:href="@{master_list.action}">Q & A</a></li>
+										<li><a th:href="@{qa_contact.action}">Contact 1:1</a></li>
+										<li><a th:if="${session.login.userId}==Master" th:href="@{qa_list.action}">1:1 List</a></li>
+									</ul>
+								</li>
+								<li><a th:if="${session.login != null}" th:href="@{upload.action}">Write</a></li>
+								<li><a th:unless="${session.login != null}" th:href="@{loginForm.action}">Write</a></li>
+							</ul>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header><!--/header-->
+	
+	<!-- 여기까지가 헤더 부분 : 다른 사람들이랑 취합해서 똑같이 수정! -->
+	
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>Category</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
+											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+											Art
+										</a>
+									</h4>
+								</div>
+								<div id="sportswear" class="panel-collapse collapse">
+									<div class="panel-body">
+										<ul>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=poster">POSTER</a></li>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=figure">PIGURE</a></li>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=good">GOODS</a></li>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=etc">ETC</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordian" href="#mens">
+											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+											Music
+										</a>
+									</h4>
+								</div>
+								<div id="mens" class="panel-collapse collapse">
+									<div class="panel-body">
+										<ul>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=lp">LP </a></li>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=videos">VIDEOS </a></li>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=tape">TAPE </a></li>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=cd">CD/DVD</a></li>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=instrument">INSTRUMENT </a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a th:href="@{list.action}">Community</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a th:href="@{qa_list.action}">Q & A</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a th:href="@{qa_contact.action}">Contact 1:1</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a th:if="${session.login != null}" th:href="@{mypage.action}">
+									 MyPage</a>
+									<h4 class="panel-title"><a th:unless="${session.login != null}" th:href="@{loginForm.action}">
+									 MyPage</a>
+								</div>
+							</div>		
+							<div style="border-bottom: 1px solid #F7F7F0; margin: 20px">
+								<button type="button" class="btn btn-fefault lcart" style="float: left;"
+								onclick="javascript:location.href='/upload.action';">write</button>
+							</div>						
+						</div><!--/category-products-->			
+											
+						<div class="shipping text-center"><!--shipping-->
+							<img src="images/sample/sideimg.png" alt="" />
+						</div><!--/shipping-->
+					
+					</div>
+				</div>
+				
+	<!-- 여기까지가 카테고리3 부분 : 다른 사람들이랑 취합해서 똑같이 수정! -->
+	
+	
+	<!-- 아티클 시작 -->
+				<div class="col-sm-9 padding-right">
+					<div class="product-details">
+					
+	<!-- 대분류 > 소분류 / 목록 -->
+						<div style="border-bottom: 1px solid #F7F7F0; margin: 20px">
+							<!-- <span><button type="button" class="btn btn-fefault cart" style="float: right;">list</button></span> -->
+							<b><span style="padding: 5px;" th:text="'[ '+${dto.prodSelect }+ ' ]'"></span></b>
+						</div>
+	
+	<!-- 왼쪽 이미지 부분 -->
+						<div class="col-sm-5">
+							<div class="view-product">
+								<img th:src="@{/upload/} + ${dto.tmImg}" alt="" />
+								<!-- <img th:src="'upload/' +${dto.tmImg}" alt="" /> -->
+							</div>
+
+						</div>
+						
+						<!-- 상단 설명부분 -->
+						<div class="col-sm-7">
+							<div class="aproduct-information">
+								
+								<h2><div style="padding-right: 40px" th:text="${dto.prodName }"></div></h2>
+								<h2><div style="color: red" th:text="'['+${dto.prodSale }+']'+${dto.prodSubject }"></div></h2>
+								
+								<p><div th:text="'판매자 : ' + ${userId }" ></div></p>
+								
+								<span style="text-align: right;">
+									<span style="text-align: right;" th:text="${dto.prodPrice } + ' 원'"></span>
+									<!-- <span style="color: #fff">fdfdfd</span> -->
+									
+									<span th:if="${myHeartCheck} == 0 or ${myHeartCount} == 0">
+										<input type="button" id="sendHeart" class="btn btn-fefault cart" style="color: #fff; line-height: 15px" value="♡"/>
+									</span>
+									<span th:if="${myHeartCount} == 1" >
+ 										<input type="button" id="removeHeart" class="btn btn-fefault cart" style="color: #fff; line-height: 15px" value="♥"/>  
+ 									</span>
+									
+								</span>
+								
+								<div style="border: 1px solid #F7F7F0; padding: 10px; margin-right: 60px; letter-spacing: 1.5px" >
+									<span style="font-size: 17px">
+										<i class="fa-solid fa-eye" th:text="${dto.prodHitCount }" style="color: blue"></i>
+										<i class="fa-solid fa-heart" th:text="${heartCount }" style="color: red"></i>
+										<i class="fa-solid fa-comments" th:text="${reviewCount}" style="color: green"></i>
+									</span>
+									<br/><br/>
+									<div th:text="'- 상품상태	: ' + ${dto.prodQuality }" ></div><br/>
+									<div th:text="'- 등록일자	: ' + ${dto.prodCreated }" ></div><br/>
+									<div th:text="'- 거래방식	: ' + ${dto.prodTrade }" ></div><br/>
+									<div th:text="'- 거래지역	: ' + ${dto.prodAddr }" ></div><br/>
+									
+								</div>
+								
+								
+							</div><!--/product-information-->
+						</div>
+					</div><!--/product-details-->
+					
+	<!-- 카테고리 탭 -->
+					<div class="category-tab shop-details-tab">
+						<div class="col-sm-12">
+							<ul class="nav nav-tabs">
+								<li><a href="#details">Details</a></li>
+								<li><a href="#reviews">Ripples</a></li>
+							</ul>
+						</div>
+						<div class="tab-content">
+							<div style="border:1px solid #F7F7F0; padding: 40px">
+								<h4><b>- details -</b></h4>
+								
+								<!-- 이미지 여러개 띄우기 -->
+								<div th:each="imgDto : ${imgDtos}">
+									<div align="center"><img width=500px th:src="@{/upload/} + ${imgDto.saveFileName}" alt=""></div>
+									</br>
+								</div>
+								
+								<div style="height: 50px" ></div>
+								<div style="padding-left: 30px" th:text="${dto.prodContent }">
+								</div>
+							</div>
+							
+							<div style="border:1px solid #F7F7F0; padding: 40px">
+								<h4><b>- ripples -</b></h4>
+		
+								<div>
+								
+<!-- 히든히든 -->
+ <input type="hidden" id="userNo" th:value="${dto.userNo}"/> 
+ <input type="hidden" id="prodNo" th:value="${dto.prodNo}"/> 
+ 
+	<!-- 댓글 구현 기능 -->
+	
+	<span id="listData" style="display: none;"></span>
+
+	<table width="700" border="0" cellpadding="0" cellspacing="0"
+		style="margin: auto;">
+
+
+		<tr>
+			<td width="600" colspan="4" height="10" ></td>
+		</tr>
+
+		<tr>
+			<td width="600" colspan="4" height="3" bgcolor="#999999"></td>
+		</tr>
+
+		<tr>
+			<td width="60" height="40" bgcolor="#eeeeee" align="center">작성자</td>
+			<td width="240" height="40" style="padding-left: 10px;" th:text="${userDto.userId }" id="userId">
+			</td>
+		</tr>
+
+		<tr>
+			<td width="600" colspan="4" height="3" bgcolor="#999999"></td>
+		</tr>
+
+		<tr>
+			<td width="60" height="80" bgcolor="#eeeeee" align="center">내용</td>
+			<td width="500" colspan="2" style="padding-left: 10px;">
+			<textarea rows="3" cols="85" class="boxTA"  bgcolor="#eeeeee" style="height: 78px;" id="reviewContent"></textarea>
+			
+			<td width="40" height="80" align="right" style="padding-right: 15px;">
+			<input type="button" value="등록" class="btn2" id="sendButton" /></td>
+			
+			</td>
+		</tr>
+
+		<tr>
+			<td width="600" colspan="4" height="3" bgcolor="#999999"></td>
+		</tr>
+
+	</table>
+	
+	<!-- 댓글 구현 기능 -->
+								</div>
+							
+							</div>
+							
+								</br>
+								<div style="padding-right: 70px;">
+									<button type="button" class="btn btn-fefault cart" style="float: right;"
+									onclick="javascript:location.href='/shop.action';" >list</button>
+								</div>
+						</div>
+					</div><!--/category-tab-->
+					
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	
+<footer id="footer"><!--Footer-->
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="companyinfo">
+							<h2><span>Muse</span>-Market </h2>
+							<p>Muse Market is a luxurious online market where you can trade art and music related products secondhand. </p>
+						</div>
+					</div>
+					
+					
+					
+					
+					<div class="col-sm-7" style="width: 975px;">
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/sample/l.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>NY.Lee</p>
+								<h2>14 06 1997</h2>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/sample/w.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>HM.WANG</p>
+								<h2>28 09 1995</h2>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/sample/y.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>SR.YANG</p>
+								<h2>03 08 1987</h2>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/sample/n.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>SE.NAM</p>
+								<h2>14 03 1997</h2>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/sample/p.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>GY.PARK</p>
+								<h2>28 01 1990</h2>
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="footer-widget">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Service</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a th:href="@{master_list.action}">Online Help</a></li>
+								<li><a href="mailto:valuenacreator@gmail.com">Contact JOJANG</a></li>
+								<li><a th:href="@{index.action}">UN Change Location</a></li>
+								<li><a th:href="@{qa_list.action}">FAQ’s</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Quick Shop</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=poster">Poster</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=FIGURE">Figure</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=GOODS">Exhibition goods</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=ETC">Extra</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=LP">Vinyl Record(LP)</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=VIDEOS">Video/DVD</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=TAPE">Tape</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=CD/DVD">CD/DVD</a></li>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=INSTRUMENT">Instruments </a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Policies</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">Terms of Use</a></li>
+								<li><a href="#">Privecy Policy</a></li>
+								<li><a href="#">Refund Policy</a></li>
+								<li><a href="#">Billing System</a></li>								
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>About Muse Market</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">Company Information</a></li>
+								<li><a href="#">Careers</a></li>
+								<li><a href="#">Store Location</a></li>
+								<li><a href="#">Affillate Program</a></li>
+								<li><a href="#">Copyright</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<div class="address">
+							<img src=" /images/home/map.png" alt="" />
+							<p>3jo Luxurious Linas MuseMarket, Seoul</p>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2022 Muse-Market Inc. All rights reserved.</p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="">3조</a></span></p>
+				</div>
+			</div>
+		</div>
+		
+	</footer><!--/Footer-->
+  
+    <script src=" js/jquery.js"></script>
+	<script src=" js/bootstrap.min.js"></script>
+	<script src=" js/jquery.scrollUp.min.js"></script>
+	<script src=" js/price-range.js"></script>
+    <script src=" js/jquery.prettyPhoto.js"></script>
+    <script src=" js/main.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.boot.mapper.MasterMapper">
+
+	<select id="maxNum" resultType="int">
+		select nvl(max(masterNo), 0) from masters
+	</select>
+	
+	<insert id="insertData" parameterType="com.spring.boot.dto.MasterDTO">
+		insert into masters(masterNo, masterSubject, masterContent, masterHitCount, masterCreated ) 
+		values(#{masterNo}, #{masterSubject}, #{masterContent}, 0, sysdate)
+	</insert>
+	
+	<select id="getDataCount" parameterType="hashMap" resultType="int">
+		select nvl(count(*), 0) from masters
+		where ${searchKey} like '%' || #{searchValue} || '%'
+	</select>
+	
+	<select id="getList" parameterType="map" resultType="com.spring.boot.dto.MasterDTO">
+		select*from(
+		select rownum rnum, data.* from(
+		select masterNo, masterSubject, masterContent, masterHitCount, to_char(masterCreated, 'YYYY-MM-DD') masterCreated
+		from masters where ${searchKey} like '%' || #{searchValue} || '%'
+		order by masterNo desc) data)
+	<![CDATA[
+		where rnum>=#{start} and rnum<=#{end}
+	]]>
+	</select>
+	
+	<select id="getReadData" parameterType="int" resultType="com.spring.boot.dto.MasterDTO">
+		select masterNo, masterSubject, masterContent, masterHitCount, masterCreated
+		from masters where masterNo=#{masterNo}
+	</select>
+	
+	<update id="updateHitCount" parameterType="int">
+		update masters set masterHitCount= masterHitCount+1 where masterNo=#{masterNo}
+	</update>
+	
+	<update id="updateData" parameterType="com.spring.boot.dto.MasterDTO">
+		update masters set masterSubject=#{masterSubject},
+		masterContent=#{masterContent}, masterHitCount=#{masterHitCount} where masterNo=#{masterNo}
+	</update>
+	
+	<delete id="deleteData" parameterType="int">
+		delete masters where masterNo=#{masterNo}
+	</delete>
+
+</mapper>

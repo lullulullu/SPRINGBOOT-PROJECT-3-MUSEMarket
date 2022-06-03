@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.boot.mapper.UsersDataMapper">
+	
+<select id="myUserHeart" parameterType="int" resultType="int">
+	select prodNo from heart where userNo=#{userNo} and heartCheck=1
+</select>
+
+<select id="myHeartProduct" parameterType="int" resultType="com.spring.boot.dto.UsersDataDTO">
+	select 
+	product.prodNo, product.userNo, product.prodSubject, product.prodSelect,
+	product.prodSale, product.prodName, product.prodPrice, product.prodHeart,product.PRODCREATED,
+	productTm.tmImg 
+	from product
+	inner join productTm
+	on product.prodNo = productTm.prodNo  
+	where product.prodNo=#{prodNo}
+</select>
+
+<select id="mySaleProduct" parameterType="int" resultType="com.spring.boot.dto.UsersDataDTO">
+	select 
+	product.prodNo, product.userNo, product.prodSubject, product.prodSelect,
+	product.prodSale, product.prodName, product.prodPrice, product.prodHeart,product.PRODCREATED,
+	productTm.tmImg 
+	from product
+	inner join productTm
+	on product.prodNo = productTm.prodNo 	
+	where product.userNo=#{userNo}
+</select>
+
+<select id="myReview" parameterType="int"  resultType="com.spring.boot.dto.UsersDataDTO">
+	select * from review where userNo=#{userNo}
+</select>
+
+<select id="myReviewProduct" resultType="com.spring.boot.dto.UsersDataDTO">
+	select * from product where prodNo=#{prodNo}
+</select>
+
+<select id="myCommu" parameterType="int"  resultType="com.spring.boot.dto.UsersDataDTO">
+	select * from commu where userNo=#{userNo}
+</select>
+
+</mapper>

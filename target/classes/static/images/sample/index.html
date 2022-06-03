@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Muse-Market</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/prettyPhoto.css" rel="stylesheet">
+    <link href="css/price-range.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+	<link href="css/main.css" rel="stylesheet">
+	<link href="css/responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    
+<!--       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+	  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script> -->
+    
+	    <style>
+	body{
+    font-family: 'Quicksand', sans-serif;
+			}
+			.gal-container{
+				padding: 12px;
+			}
+			.gal-item{
+				overflow: hidden;
+				padding: 3px;
+			}
+			.gal-item .box{
+				height: 350px;
+				overflow: hidden;
+			}
+			.box img{
+				height: 100%;
+				width: 100%;
+				object-fit:cover;
+				-o-object-fit:cover;
+			}
+			.gal-item a:focus{
+				outline: none;
+			}
+			.gal-item a:after{
+				content:"\e003";
+				font-family: 'Glyphicons Halflings';
+				opacity: 0;
+				background-color: rgba(0, 0, 0, 0.75);
+				position: absolute;
+				right: 3px;
+				left: 3px;
+				top: 3px;
+				bottom: 3px;
+				text-align: center;
+			    line-height: 350px;
+			    font-size: 30px;
+			    color: #fff;
+			    -webkit-transition: all 0.5s ease-in-out 0s;
+			    -moz-transition: all 0.5s ease-in-out 0s;
+			    transition: all 0.5s ease-in-out 0s;
+			}
+			.gal-item a:hover:after{
+				opacity: 1;
+			}
+			.modal-open .gal-container .modal{
+				background-color: rgba(0,0,0,0.4);
+			}
+			.modal-open .gal-item .modal-body{
+				padding: 0px;
+			}
+			.modal-open .gal-item button.close{
+			    position: absolute;
+			    width: 25px;
+			    height: 25px;
+			    background-color: #000;
+			    opacity: 1;
+			    color: #fff;
+			    z-index: 999;
+			    right: -12px;
+			    top: -12px;
+			    border-radius: 50%;
+			    font-size: 15px;
+			    border: 2px solid #fff;
+			    line-height: 25px;
+			    -webkit-box-shadow: 0 0 1px 1px rgba(0,0,0,0.35);
+				box-shadow: 0 0 1px 1px rgba(0,0,0,0.35);
+			}
+			.modal-open .gal-item button.close:focus{
+				outline: none;
+			}
+			.modal-open .gal-item button.close span{
+				position: relative;
+				top: -3px;
+				font-weight: lighter;
+				text-shadow:none;
+			}
+			.gal-container .modal-dialogue{
+				width: 80%;
+			}
+			.gal-container .description{
+				position: relative;
+				height: 40px;
+				top: -40px;
+				padding: 10px 25px;
+				background-color: rgba(0,0,0,0.5);
+				color: #fff;
+				text-align: left;
+			}
+			.gal-container .description h4{
+				margin:0px;
+				font-size: 15px;
+				font-weight: 300;
+				line-height: 20px;
+			}
+			.gal-container .modal.fade .modal-dialog {
+			    -webkit-transform: scale(0.1);
+			    -moz-transform: scale(0.1);
+			    -ms-transform: scale(0.1);
+			    transform: scale(0.1);
+			    top: 100px;
+			    opacity: 0;
+			    -webkit-transition: all 0.3s;
+			    -moz-transition: all 0.3s;
+			    transition: all 0.3s;
+			}
+			
+			.gal-container .modal.fade.in .modal-dialog {
+			    -webkit-transform: scale(1);
+			    -moz-transform: scale(1);
+			    -ms-transform: scale(1);
+			    transform: scale(1);
+			    -webkit-transform: translate3d(0, -100px, 0);
+			    transform: translate3d(0, -100px, 0);
+			    opacity: 1;
+			}
+			@media (min-width: 768px) {
+			.gal-container .modal-dialog {
+			    width: 55%;
+			    margin: 50 auto;
+			}
+			}
+			@media (max-width: 768px) {
+			    .gal-container .modal-content{
+			        height:250px;
+			    }
+			}
+	  
+	  </style>
+    
+    
+</head><!--/head-->
+<body>
+
+<header id="header"><!--header-->
+		<div class="header_top"><!--header_top-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="contactinfo">
+							<ul class="nav nav-pills">
+								<li><a href="#"><i class="fa fa-phone"></i> +82 123 1234</a></li>
+								<li><a href="#"><i class="fa fa-envelope"></i> info@muse.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="social-icons pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="https://twitter.com/"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="https://de.linkedin.com/"><i class="fa fa-linkedin"></i></a></li>
+								<li><a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header_top-->
+		
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a th:href="@{index.action}"><img src=" images/home/logo_6.png" alt=""  style="width:240px"/></a>
+						</div>
+						<div class="btn-group pull-right">
+
+
+
+
+
+
+
+						</div>
+					</div>
+					
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-navr">
+	    						<li><div th:text="${session.login.getUserName() + ((session.login.getUserId()))} + '님 환영합니다'"></div></li>
+							</ul>
+						</div>
+					</div>
+					
+					
+					
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-navr">
+						
+								<li>								
+								<a th:if="${session.login != null}" th:href="@{mypage.action}">
+								<i class="fa fa-user"></i> MyPage</a>
+								
+								</li>
+								
+								<li>
+								<a th:if="${session.login == null}" th:href="@{loginForm.action}"><i class="fa fa-user"></i> MyPage</a>
+								</li>
+								
+								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								<li><a th:if="${session.login == null}" th:href="@{signupForm.action}"><i class="fa fa-user"></i>Join</a></li>
+								<li><a th:if="${session.login == null}" th:href="@{loginForm.action}"><i class="fa fa-pencil-square"></i>Write</a></li>
+								<li><a th:if="${session.login != null}" th:href="@{upload.action}"><i class="fa fa-pencil-square"></i>Write</a></li>
+								<li><a th:if="${session.login == null}" th:href="@{loginForm.action}"><i class="fa fa-lock"></i>Login</a></li>
+								<li><a th:if="${session.login != null}" th:href="@{logout.action}"><i class="fa fa-unlock"></i>Logout</a></li>
+								<li><div th:if="${session.login != null}"></div></li>
+							</ul>
+						</div>
+					</div>
+
+					
+				</div>
+				</div>
+			</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a th:href="@{index.action}" class="active">Home</a></li>
+                                <li class="dropdown">
+                                <a th:unless="${session.login != null}" th:href="@{loginForm.action}">Sale<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a th:href="@{loginForm.action}">Art(Whole)</a></li>
+                                        <li><a th:href="@{loginForm.action}">Art- Poster</a></li>                                        
+                                        <li><a th:href="@{loginForm.action}">Art - Figure</a></li>
+										<li><a th:href="@{loginForm.action}">Art - Exhibition goods</a></li> 
+										<li><a th:href="@{loginForm.action}">Art - Extra</a></li> 										
+			
+                                        <li><a th:href="@{loginForm.action}">Music(Whole)</a></li>
+                                        <li><a th:href="@{loginForm.action}">Music - LP</a></li>                                        
+                                        <li><a th:href="@{loginForm.action}">Music - Video/DVD</a></li>
+										<li><a th:href="@{loginForm.action}">Music - Tape</a></li> 
+										<li><a th:href="@{loginForm.action}">Music - Instruments</a></li>
+										<li><a th:href="@{loginForm.action}">Music - Extra</a></li> 
+                                    </ul>
+                                </li>
+								<li class="dropdown"><a th:href="@{shop.action}">Purchase<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">                                                                       
+                                        <li><a href="http://localhost:8080/selecshop.action?prodSelect=poster">POSTER</a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=FIGURE">FIGURE</a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=GOODS">GOODS</a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=ETC">ETC</a></li> 
+										
+                                        <li><a href="http://localhost:8080/selecshop.action?prodSelect=LP">LP </a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=VIDEOS">VIDEOS </a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=TAPE">TAPE </a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=CD/DVD">CD/DVD</a></li>
+										<li><a href="http://localhost:8080/selecshop.action?prodSelect=INSTRUMENT">INSTRUMENT </a></li> 
+                                    </ul>
+                                </li> 
+							
+								<li class="dropdown"><a th:href="@{list.action}">Contact<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+										<li><a th:href="@{master_list.action}">Q & A</a></li>
+										<li><a th:href="@{qa_contact.action}">Contact 1:1</a></li>
+										<li><a th:href="@{qa_list.action}">1:1 List</a></li>
+									</ul>
+								<li><a th:href="@{list.action}">Community</a></li>
+								<li><a th:if="${session.login != null}" th:href="@{upload.action}">Write</a></li>
+							</ul>
+						</div>
+					</div>
+
+
+
+
+					</div> 
+				</div>
+			</div>
+		<!--/header-bottom-->
+	</header><!--/header-->
+
+<hr/>
+<br/>
+
+
+	
+<!-- 	slider -->
+	
+	<div id="slider" >
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="slider-carousel" class="carousel slide" data-ride="carousel" style="width: 100%;">
+						<ol class="carousel-indicators">
+							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+							<li data-target="#slider-carousel" data-slide-to="1"></li>
+							<li data-target="#slider-carousel" data-slide-to="2"></li>
+							<li data-target="#slider-carousel" data-slide-to="3"></li>
+						</ol>
+						
+						
+						<div class="carousel-inner" style="width: 100%;">
+							<div class="item active">
+								
+								
+								<div class="">
+									<img src="images/home/slider1.png" class="girl img-responsive" alt="" />
+								</div>
+								
+								
+							</div>
+							<div class="item">
+								<div class="">
+									<img src="images/home/slider2.png" class="girl img-responsive" alt="" />
+
+								</div>
+							</div>
+							
+							<div class="item">
+								<div class="">
+									<img src="images/home/slider3.png" class="girl img-responsive" alt="" />
+								</div>
+							</div>
+							
+							<div class="item">
+								<div class="">
+									<img src="images/home/slider4.png" class="girl img-responsive" alt="" />
+								</div>
+							</div>
+						</div>
+						
+						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+							<i class="fa fa-angle-left"></i>
+						</a>
+						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+							<i class="fa fa-angle-right"></i>
+						</a>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<!-- 	/slider -->
+
+
+								 
+								 <!-- 광고베너 -->
+					<section id="advertisement">
+						<div class="container">
+							<a href="http://localhost:8080/signupForm.action"><img src="images/sample/advertisement.png" alt="" /></a>
+						</div>
+					</section>
+							<!--  -->
+								
+								<section>
+								<div style="text-align: center;">
+								<h3>- Best deal review of the month -</h3>
+								<hr/>
+								</div>
+								
+								
+							  <div class="container gal-container">
+							    <div class="col-md-8 col-sm-12 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#1">
+							          <img src="images/sample/logo1.png">
+							        </a>
+							        <div class="modal fade" id="1" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/logo1.png">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>This is the first one on my Gallery</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#2">
+							          <img src="images/sample/msample4.jpg">
+							        </a>
+							        <div class="modal fade" id="2" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/msample4.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>인테리어 소품으로 이용하려고 구매했습니다. 만족스럽게 사용중입니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#3">
+							          <img src="images/sample/msample2.jpg">
+							        </a>
+							        <div class="modal fade" id="3" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/msample2.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>음대 입시를 위해 구입한 클래식 피아노입니다. 너무 만족스럽게 사용중입니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#4">
+							          <img src="images/sample/msample1.jpg">
+							        </a>
+							        <div class="modal fade" id="4" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/msample1.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>클래식 기타 배워보고싶어서 샀습니다. 판매자분이 정말 친절하셨어요</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#5">
+							          <img src="images/sample/sample1.jpg">
+							        </a>
+							        <div class="modal fade" id="5" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/sample1.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>벽이 심심해서 구입한 포스터입니다. 너무 예쁘게 잘 쓰고 있습니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#6">
+							          <img src="images/sample/sample10.jpg">
+							        </a>
+							        <div class="modal fade" id="6" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/sample10.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>취미로 그림을 그리고 싶어서 산 붓 입니다. 이런 고가의 붓을 이렇게 저렴한 가격에 사서 좋았습니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#7">
+							          <img src="images/sample/sample13.jpg">
+							        </a>
+							        <div class="modal fade" id="7" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/sample13.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>오랜만에 CD로 음악을 듣고싶어서 샀습니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#8">
+							          <img src="images/sample/sample9.jpg">
+							        </a>
+							        <div class="modal fade" id="8" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/sample9.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>할머니가 듣고싶어 하셨던 귀한 음반을 살수 있게 해주셔서 감사합니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#9">
+							          <img src="images/sample/sample11.jpg">
+							        </a>
+							        <div class="modal fade" id="9" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/sample11.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>커다란 캔버스에 작업하려고 샀습니다. 매우 만족합니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-8 col-sm-12 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#10">
+							          <img src="images/sample/sample12.jpg">
+							        </a>
+							        <div class="modal fade" id="10" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/sample12.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>즐거운 작업 저렴하게 할수있게 만들어주셔서 감사합니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#11">
+							          <img src="images/sample/large.jpg">
+							        </a>
+							        <div class="modal fade" id="11" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/large.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>시장에서 구할수 없는 명반을 많이 보고 고를수 있어서 기뻤습니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#12">
+							          <img src="images/sample/sample16.jpg">
+							        </a>
+							        <div class="modal fade" id="12" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/sample16.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>정말 너무 예쁜 포스터 입니다.!</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#13">
+							          <img src="images/sample/sample14.jpg">
+							        </a>
+							        <div class="modal fade" id="13" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/sample14.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>너무 만족합니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#14">
+							          <img src="images/sample/sample15.jpg">
+							        </a>
+							        <div class="modal fade" id="14" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/sample15.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>듣고싶었던 음반들을 대량으로 구입해서 기뻤습니다.</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#15">
+							          <img src="images/sample/sample17.jpg">
+							        </a>
+							        <div class="modal fade" id="15" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/sample17.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>카페 인테리어와 찰떡입니다!</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+							      <div class="box">
+							        <a href="#" data-toggle="modal" data-target="#16">
+							          <img src="images/sample/logo.jpg">
+							        </a>
+							        <div class="modal fade" id="16" tabindex="-1" role="dialog">
+							          <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+							              <div class="modal-body">
+							                <img src="images/sample/logo.jpg">
+							              </div>
+							                <div class="col-md-12 description">
+							                  <h4>최고의 명반입니다! 덕분에 다시 들을수 있어서 기뻤습니다.!</h4>
+							                </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							  </div>
+							</section>
+							
+							<br/>
+							<br/>
+	
+	
+
+	
+	<footer id="footer"><!--Footer-->
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="companyinfo">
+							<h2><span>Muse</span>-Market </h2>
+							<p>Muse Market is a luxurious online market where you can trade art and music related products secondhand. </p>
+						</div>
+					</div>
+					
+					
+					
+					
+					<div class="col-sm-7" style="width: 975px;">
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/sample/l.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>NY.Lee</p>
+								<h2>14 06 1997</h2>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/sample/w.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>HM.WANG</p>
+								<h2>28 09 1995</h2>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/sample/y.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>SR.YANG</p>
+								<h2>03 08 1987</h2>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/sample/n.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>SE.NAM</p>
+								<h2>14 03 1997</h2>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/sample/p.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>GY.PARK</p>
+								<h2>28 01 1990</h2>
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="footer-widget">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Service</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a th:href="@{master_list.action}">Online Help</a></li>
+								<li><a href="mailto:valuenacreator@gmail.com">Contact JOJANG</a></li>
+								<li><a th:href="@{index.action}">UN Change Location</a></li>
+								<li><a th:href="@{qa_list.action}">FAQ’s</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Quick Shop</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=poster">Poster</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=FIGURE">Figure</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=GOODS">Exhibition goods</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=ETC">Extra</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=LP">Vinyl Record(LP)</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=VIDEOS">Video/DVD</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=TAPE">Tape</a></li>
+								<li><a href="http://localhost:8080/selecshop.action?prodSelect=CD/DVD">CD/DVD</a></li>
+											<li><a href="http://localhost:8080/selecshop.action?prodSelect=INSTRUMENT">Instruments </a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Policies</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">Terms of Use</a></li>
+								<li><a href="#">Privecy Policy</a></li>
+								<li><a href="#">Refund Policy</a></li>
+								<li><a href="#">Billing System</a></li>								
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>About Muse Market</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">Company Information</a></li>
+								<li><a href="#">Careers</a></li>
+								<li><a href="#">Store Location</a></li>
+								<li><a href="#">Affillate Program</a></li>
+								<li><a href="#">Copyright</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<div class="address">
+							<img src=" /images/home/map.png" alt="" />
+							<p>3jo Luxurious Linas MuseMarket, Seoul</p>
+						</div>
+					</div>
+
+<!-- 
+					<div class="col-sm-3 col-sm-offset-1">
+						<div class="single-widget">
+							<h2>About Muse Market</h2>
+							<form action="#" class="searchform">
+								<input type="text" placeholder="Your email address" />
+								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+								<p>Muse Market is a luxurious online market where you can trade art and music related products secondhand. </p>
+							</form>
+						</div>
+					</div> -->
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2022 Muse-Market Inc. All rights reserved.</p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="">3조</a></span></p>
+				</div>
+			</div>
+		</div>
+		
+	</footer><!--/Footer-->
+	
+
+  
+    <script src=" js/jquery.js"></script>
+	<script src=" js/bootstrap.min.js"></script>
+	<script src=" js/jquery.scrollUp.min.js"></script>
+	<script src=" js/price-range.js"></script>
+    <script src=" js/jquery.prettyPhoto.js"></script>
+    <script src=" js/main.js"></script>
+    
+</body>
+</html>
